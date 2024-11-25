@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: brawlapi-db
+    environment:
+      POSTGRES_USER: los_primos
+      POSTGRES_PASSWORD: sindolornohaygloria
+      POSTGRES_DB: brawlapi
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
