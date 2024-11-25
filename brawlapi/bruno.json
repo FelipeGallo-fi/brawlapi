@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "brawlapi",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
