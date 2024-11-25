@@ -1,11 +1,10 @@
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://los_primos:sindolornohaygloria@localhost:5432/brawlapi"
+  url = env("DATABASE_URL")
 }
 
 model Usuario {
