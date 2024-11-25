@@ -8,8 +8,12 @@ datasource db {
   url      = "postgresql://los_primos:sindolornohaygloria@localhost:5432/brawlapi"
 }
 
-model Personaje {
-  id     Int    @id @default(autoincrement())
-  nombre String
-  poder  Int
+model Usuario {
+  id          Int    @id @default(autoincrement())
+  nombre      String @unique 
+  region      String
+  edad        Int 
+  copas       Int @default(0)
+  brawlerFav  String
+  monedas     Int @default(0)
 }

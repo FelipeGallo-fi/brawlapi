@@ -1,24 +1,19 @@
-const express = require('express')
-const app = express()
-const port = 3000
-app.use(express.json())
+const express = require('express');
+const { PrismaClient } = require('@prisma/client');
+const app = express();
+const port = 3000;
 
-let personajes = [
-  {
-    id: 1,
-    nombre: 'Goku',
-    poder: 9000
-  },
-  {
-    id: 2,
-    nombre: 'Vegeta',
-    poder: 8000
-  }
-]
+const prisma = new PrismaClient();
 
-app.get('/api/v1/personajes', (req, res) => {
+app.use(express.json());
+
+app.get('/api/v1/personajes', async (req, res) => {
+  const personajes = await prisma.personaje.findMany();
   res.status(200).json(personajes);
-})
+});
+
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
+
+module.exports = prisma;
