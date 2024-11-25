@@ -7,3 +7,9 @@ datasource db {
   provider = "postgresql"
   url      = "postgresql://los_primos:sindolornohaygloria@localhost:5432/brawlapi"
 }
+
+model Personaje {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  poder  Int
+}
