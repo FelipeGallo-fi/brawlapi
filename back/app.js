@@ -61,7 +61,7 @@ app.delete('/api/v1/usuarios/:id', async (req, res) => {
         id: parseInt(id)
       }
     });
-    res.status(200).json({"Eliminaste al usuario de id:": id});
+    res.status(200).json({usuario: usuario, mensaje: 'Usuario eliminado'});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
