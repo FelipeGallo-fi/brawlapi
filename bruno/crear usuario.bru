@@ -6,6 +6,17 @@ meta {
 
 post {
   url: http://localhost:3000/api/v1/usuarios
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+      "nombre": "NuevoUsuario",
+      "region": "EU",
+      "edad": 25,
+      "copas": 100,
+      "brawlerFav": "Shelly"
+  }
+  
 }
