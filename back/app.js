@@ -20,7 +20,7 @@ app.get('/api/v1/inicio', async (req, res) => {
 
 //USUARIOS (falta update)
 
-//create
+//usuarios create
 
 app.post('/api/v1/usuarios', async (req, res) => {
   const { nombre, region, edad, copas, brawlerFav, monedas } = req.body;
@@ -41,7 +41,32 @@ app.post('/api/v1/usuarios', async (req, res) => {
   }
 });
 
-//read
+//usuarios update
+
+app.put('/api/v1/usuario/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombre, region, edad, copas, brawlerFav, monedas } = req.body;
+  try {
+    const usuarioActualizado = await prisma.usuario.update({
+      where: {
+        id: parseInt(id)
+      },
+      data: {
+        nombre: nombre,
+        region: region,
+        edad: edad,
+        copas: copas,
+        brawlerFav: brawlerFav,
+        monedas: monedas
+      }
+    });
+    res.status(200).json(usuarioActualizado);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//usuarios read
 
 app.get('/api/v1/usuarios/:id', async (req, res) => {
   const { id } = req.params;
@@ -61,7 +86,7 @@ app.get('/api/v1/usuarios/:id', async (req, res) => {
   }
 });
 
-//delete
+//usaurios delete
 
 app.delete('/api/v1/usuarios/:id', async (req, res) => {
   const { id } = req.params;
@@ -79,7 +104,7 @@ app.delete('/api/v1/usuarios/:id', async (req, res) => {
 
 //BRAWLERS (falta update)
 
-//read
+//brawlers read
 
 app.get('/api/v1/brawlers', async (req, res) => {
   try {
@@ -90,7 +115,7 @@ app.get('/api/v1/brawlers', async (req, res) => {
   }
 });
 
-//create
+//brawlers create
 
 app.post('/api/v1/brawlers', async (req, res) => {
   const brawlers = req.body;
@@ -99,13 +124,41 @@ app.post('/api/v1/brawlers', async (req, res) => {
       data: brawlers,
       skipDuplicates: true
     });
-    res.status(201).json(brawlers);
+    res.status(201).json(createdBrawlers);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
-//delete
+//brawlers update
+
+app.put('/api/v1/brawler/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombre, tipo, rareza, descripcion, ataque, super: superPower, starPower, gadget, imagen } = req.body;
+  try {
+    const updatedBrawler = await prisma.brawler.update({
+      where: {
+        id: parseInt(id)
+      },
+      data: {
+        nombre: nombre,
+        tipo: tipo,
+        rareza: rareza,
+        descripcion: descripcion,
+        ataque: ataque,
+        super: superPower,
+        starPower: starPower,
+        gadget: gadget,
+        imagen: imagen
+      }
+    });
+    res.status(200).json(updatedBrawler);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//brawlers delete
 
 app.delete('/api/v1/brawler/:id', async (req, res) => {
   const { id } = req.params;
@@ -121,7 +174,7 @@ app.delete('/api/v1/brawler/:id', async (req, res) => {
   }
 });
 
-//read
+//brawlers read
 
 app.get('/api/v1/brawler/:id', async (req, res) => {
   const { id } = req.params;
