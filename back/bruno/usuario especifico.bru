@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: http://localhost:3000/api/v1/usuarios/id
+  url: http://localhost:3000/api/v1/usuario/:id
   body: none
   auth: none
+}
+
+params:path {
+  id: 1
 }

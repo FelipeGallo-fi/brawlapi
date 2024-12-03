@@ -4,15 +4,30 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Usuario {
-  id          Int    @id @default(autoincrement())
-  nombre      String @unique 
-  region      String
-  edad        Int 
-  copas       Int @default(0)
-  brawlerFav  String
-  monedas     Int @default(0)
+  id         Int     @id @default(autoincrement())
+  nombre     String  @unique
+  region     String
+  edad       Int
+  copas      Int     @default(0)
+  brawlerFav Int
+  monedas    Int     @default(0)
+  brawler    Brawler @relation(fields: [brawlerFav], references: [id])
+}
+
+model Brawler {
+  id          Int       @id @default(autoincrement())
+  nombre      String    @unique
+  tipo        String
+  rareza      String
+  descripcion String
+  ataque      String
+  super       String
+  starPower   String
+  gadget      String
+  imagen      String
+  usuarios    Usuario[]
 }

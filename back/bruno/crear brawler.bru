@@ -1,0 +1,25 @@
+meta {
+  name: crear brawler
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:3000/api/v1/brawlers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+        "nombre": "Colt",
+        "tipo": "Francotirador",
+        "rareza": "Común",
+        "descripcion": "Un tirador rápido",
+        "ataque": "Disparo rápido",
+        "super": "Ráfaga de balas",
+        "starPower": "Slick Boots",
+        "gadget": "Speedloader",
+        "imagen": "/public/images/colt.png"
+      }
+}
