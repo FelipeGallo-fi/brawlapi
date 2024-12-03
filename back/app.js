@@ -47,7 +47,7 @@ app.put('/api/v1/usuario/:id', async (req, res) => {
   const { id } = req.params;
   const { nombre, region, edad, copas, brawlerFav, monedas } = req.body;
   try {
-    const updatedUsuario = await prisma.usuario.update({
+    const usuarioActualizado = await prisma.usuario.update({
       where: {
         id: parseInt(id)
       },
@@ -60,7 +60,7 @@ app.put('/api/v1/usuario/:id', async (req, res) => {
         monedas: monedas
       }
     });
-    res.status(200).json(updatedUsuario);
+    res.status(200).json(usuarioActualizado);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
