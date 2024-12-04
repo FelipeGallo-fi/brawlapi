@@ -1,66 +1,103 @@
-body {
-    font-family: Arial, sans-serif;
+/*Reset css*/
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 1em 0;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
     padding: 0;
+    background-image: url('./imgs/background_og.jpg');
+    background-repeat: repeat;
+    background-size: auto;
 }
 
-nav ul li {
-    display: inline;
-    margin: 0 1em;
-}
+/*Navbar*/
 
-nav ul li a {
-    color: white;
+.navbar {
+    background-color: rgba(122, 140, 164, 0.8549019608);
+    font-family: "Helvetica", cursive;
+    color: black;
+    z-index: 1000;
+}
+.navbar .navbar-brand {
     text-decoration: none;
+    color: black;
+    font-weight: 1000;
+    font-size: 1.2rem;
+    transition: 1s;
 }
+.navbar .navbar-brand:hover {
+    color: white;
+    transform: scale(1.01);
+}
+.navbar .nav-item {
+    list-style: none;
+}
+.navbar .nav-item .nav-link {
+    text-decoration: none;
+    list-style: none;
+    color: black;
+    font-weight: 750;
+    font-size: 16px;
+    padding: 10px;
+    transition: 1s;
+}
+.navbar .nav-item .nav-link:hover {
+    color: white;
+    transform: scale(1.01);
+}
+
+.nav-disc {
+    background-color: rgba(203, 99, 97, 0.9215686275);
+}
+
 
 main {
-    padding: 2em;
+    height: 1000px;
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-tbody td {
+/*Landing*/
+#landing {
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    color: white;
+    font-size: 2em;
+    font-weight: 700;
+    font-family: "Helvetica", cursive;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+#landing img{
+    height: 300px;
+    width: 300px;
+}
+
+/*Barra*/
+
+#barra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#barra ul{
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+#barra ul li{
+    list-style: none;
+    text-decoration: none;
+}
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
