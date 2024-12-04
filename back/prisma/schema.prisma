@@ -16,6 +16,7 @@ model Usuario {
   brawlerFav Int
   monedas    Int     @default(0)
   brawler    Brawler @relation(fields: [brawlerFav], references: [id])
+  batallas   Batalla[]
 }
 
 model Brawler {
@@ -30,4 +31,16 @@ model Brawler {
   gadget      String
   imagen      String
   usuarios    Usuario[]
+  batallas    Batalla[]
+}
+
+model Batalla {
+  id          Int      @id @default(autoincrement())
+  fecha       DateTime @default(now())
+  usuarioId   Int
+  brawlerId   Int
+  resultado   String
+
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  brawler     Brawler  @relation(fields: [brawlerId], references: [id])
 }
