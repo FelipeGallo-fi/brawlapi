@@ -8,51 +8,9 @@
 
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
     background-image: url('./imgs/background_og.jpg');
     background-repeat: repeat;
     background-size: auto;
-}
-
-/*Navbar*/
-
-.navbar {
-    background-color: rgba(122, 140, 164, 0.8549019608);
-    font-family: "Helvetica", cursive;
-    color: black;
-    z-index: 1000;
-}
-.navbar .navbar-brand {
-    text-decoration: none;
-    color: black;
-    font-weight: 1000;
-    font-size: 1.2rem;
-    transition: 1s;
-}
-.navbar .navbar-brand:hover {
-    color: white;
-    transform: scale(1.01);
-}
-.navbar .nav-item {
-    list-style: none;
-}
-.navbar .nav-item .nav-link {
-    text-decoration: none;
-    list-style: none;
-    color: black;
-    font-weight: 750;
-    font-size: 16px;
-    padding: 10px;
-    transition: 1s;
-}
-.navbar .nav-item .nav-link:hover {
-    color: white;
-    transform: scale(1.01);
-}
-
-.nav-disc {
-    background-color: rgba(203, 99, 97, 0.9215686275);
 }
 
 
@@ -86,6 +44,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    
 }
 
 #barra ul{
@@ -93,27 +53,11 @@ main {
     gap: 30px;
     justify-content: space-between;
     align-items: center;
+    margin: 0; 
+    padding: 0; 
+    list-style: none;
 }
 #barra ul li{
     list-style: none;
     text-decoration: none;
-}
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-}
-
-.grid-item {
-    text-align: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-
-
-.grid-item h3 {
-    margin: 10px 0 0;
 }
