@@ -1,11 +1,13 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const cors = require('cors'); 
 const app = express();
 const port = 3000;
 
 const prisma = new PrismaClient();
 
 app.use(express.json());
+app.use(cors());
 
 //Home
 
@@ -193,6 +195,29 @@ app.get('/api/v1/brawler/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+//brawlers buscar id por nombre
+
+app.get('/api/v1/brawlers', async (req, res) => {
+  const { nombre } = req.query;
+  try {
+    const brawlers = await prisma.brawler.findMany({
+      where: {
+        nombre: {
+          contains: nombre,
+          mode: 'insensitive'
+        }
+      },
+      select: {
+        id: true
+      }
+    });
+    res.status(200).json(brawlers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
