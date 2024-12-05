@@ -17,6 +17,50 @@ body {
 main {
     height: 1000px;
 }
+
+/*Header*/
+
+
+/*Navbar*/
+
+.navbar {
+    background-color: rgba(122, 140, 164, 0.8549019608);
+    font-family: "Helvetica", cursive;
+    color: black;
+    z-index: 1000;
+}
+.navbar .navbar-brand {
+    text-decoration: none;
+    color: black;
+    font-weight: 1000;
+    font-size: 1.2rem;
+    transition: 1s;
+}
+.navbar .navbar-brand:hover {
+    color: white;
+    transform: scale(1.01);
+}
+.navbar .nav-item {
+    list-style: none;
+}
+.navbar .nav-item .nav-link {
+    text-decoration: none;
+    list-style: none;
+    color: black;
+    font-weight: 750;
+    font-size: 16px;
+    padding: 10px;
+    transition: 1s;
+}
+.navbar .nav-item .nav-link:hover {
+    color: white;
+    transform: scale(1.01);
+}
+
+.nav-disc {
+    background-color: rgba(203, 99, 97, 0.9215686275);
+}
+
 /*Landing*/
 #landing {
     background-size: cover;
@@ -60,4 +104,70 @@ main {
 #barra ul li{
     list-style: none;
     text-decoration: none;
+}
+
+/*Tabla usuarios*/
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.tabla {
+    border-radius: 5px;
+    width: 90%;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.tabla thead {
+    background-color: #343a40;
+    color: white;
+}
+
+.tabla th, .tabla td {
+    padding: 15px;
+    text-align: center;
+}
+
+.tabla th {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.tabla tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tabla tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.tabla tbody tr td {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Crear usuario */
+form {
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form .form-label {
+    font-weight: bold;
+}
+
+form .btn {
+    width: 100%;
 }
