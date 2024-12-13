@@ -154,8 +154,9 @@ main {
     border-bottom: none;
 }
 
-/* Crear usuario */
-form {
+/* Formularios usuario */
+
+.formUsuario {
     width: 90%;
     max-width: 600px;
     background-color: white;
@@ -164,10 +165,27 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form .form-label {
+.formUsuario .form-label {
     font-weight: bold;
 }
 
-form .btn {
+.formUsuario .btn {
     width: 100%;
+}
+
+/*Eliminar usuario form*/
+
+.eliminarForm{
+    width: 300px;
+    margin-left: 40%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#eliminarUsuarioForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
