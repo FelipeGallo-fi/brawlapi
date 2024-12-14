@@ -15,7 +15,7 @@ body {
 
 
 main {
-    height: 1000px;
+    height: auto;
 }
 
 /*Header*/
@@ -188,4 +188,12 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/*Brawlers grid*/
+
+.grid-container{
+    display: flex;
+    margin-top: 100px;
+    gap: 5px;
 }

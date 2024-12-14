@@ -31,37 +31,35 @@
         </nav> 
     </header>
     <main>
-        <h2>Personajes de Brawl Stars</h2>
-        <p>Los brawlers que distintos jugadores eligen</p>
         <div class="grid-container" id="brawlers-grid">
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../main.js">
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('http://localhost:3000/api/v1/brawlers', {
-             method: 'GET'
-            })
-            .then(response => response.json())
-            .then(brawlers => {
-                const gridContainer = document.getElementById('brawlers-grid');
-                brawlers.forEach(brawler => {
-                    const brawlerCard = document.createElement('div');
-                    brawlerCard.classList.add('card', 'm-2');
-                    brawlerCard.style.width = '18rem';
-                    brawlerCard.innerHTML = `
-                        <div class="card-body">
-                            <h5 class="card-title">${brawler.nombre}</h5>
-                            <p class="card-text">ID: ${brawler.id}</p>
-                            <p class="card-text">Tipo: ${brawler.tipo}</p>
-                            <p class="card-text">Rareza: ${brawler.rareza}</p>
+    <script>
+        fetch('http://localhost:3000/api/v1/brawlers')
+        .then(response => response.json())
+        .then(brawlers => {
+            console.log(brawlers);
+            const gridContainer = document.getElementById('brawlers-grid');
+            brawlers.forEach(brawler => {
+                const brawlerCard = document.createElement('div');
+                brawlerCard.classList.add('card', 'm-2');
+                brawlerCard.style.width = '18rem';
+                brawlerCard.innerHTML = `
+                    <div class="card-body">
+                        <div>
+                            <img src="${brawler.imagen}" class="card-img-top" alt="${brawler.nombre}">
                         </div>
-                    `;
-                    gridContainer.appendChild(brawlerCard);
-            });
-            })
-            .catch(error => console.error('Error fetching brawlers:', error));
-            });
+                        <h5 class="card-title">${brawler.nombre}</h5>
+                        <p class="card-text">ID: ${brawler.id}</p>
+                        <p class="card-text">Tipo: ${brawler.tipo}</p>
+                        <p class="card-text">Rareza: ${brawler.rareza}</p>
+                    </div>
+                `;
+                gridContainer.appendChild(brawlerCard);
+        });
+        })
+        .catch(error => console.error('Error fetching brawlers:', error));
     </script>
 </body>
 </html>

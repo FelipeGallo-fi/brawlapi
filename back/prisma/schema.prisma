@@ -29,7 +29,6 @@ model Brawler {
   super       String
   starPower   String
   gadget      String
-  imagen      String
   usuarios    Usuario[]
   batallas    Batalla[]
 }
