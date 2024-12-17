@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav  mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="./crear_usuario.html">Crear Usuario</a>
+                            <a class="nav-link active" aria-current="page" href="../index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" id="editar_usuario" aria-current="page"  href="./editar_usuario.html">Editar Usuario</a>
@@ -48,12 +48,17 @@
                 brawlerCard.innerHTML = `
                     <div class="card-body">
                         <div>
-                            <img src="${brawler.imagen}" class="card-img-top" alt="${brawler.nombre}">
+                            <img src="../imgs/${brawler.nombre}.png" class="card-img-top" alt="${brawler.nombre}">
                         </div>
-                        <h5 class="card-title">${brawler.nombre}</h5>
-                        <p class="card-text">ID: ${brawler.id}</p>
-                        <p class="card-text">Tipo: ${brawler.tipo}</p>
-                        <p class="card-text">Rareza: ${brawler.rareza}</p>
+                        <h5 class="card-title"><strong>${brawler.nombre}</strong></h5>
+                        <p class="card-text"><strong>ID:</strong> ${brawler.id}</p>
+                        <p class="card-text"><strong>Tipo:</strong> ${brawler.tipo}</p>
+                        <p class="card-text"><strong>Rareza:</strong> ${brawler.rareza}</p>
+                        <p class="card-text"><strong>Descripcion:</strong> ${brawler.descripcion}</p>
+                        <p class="card-text"><strong>Ataque:</strong> ${brawler.ataque}</p>
+                        <p class="card-text"><strong>Super:</strong> ${brawler.super}</p>
+                        <p class="card-text"><strong>Gadget:</strong> ${brawler.gadget}</p>
+                        <p class="card-text"><strong>Starpower:</strong> ${brawler.starPower}</p>
                     </div>
                 `;
                 gridContainer.appendChild(brawlerCard);
