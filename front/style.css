@@ -13,11 +13,6 @@ body {
     background-size: auto;
 }
 
-
-main {
-    height: 1000px;
-}
-
 /*Header*/
 
 
@@ -113,6 +108,7 @@ main {
     justify-content: center;
     align-items: center;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .tabla {
@@ -188,4 +184,30 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/*Brawlers grid*/
+
+.grid-container{
+    display: flex;
+    margin-top: 100px;
+    width: auto;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.card-body{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-body img{
+    margin-bottom: 40px;
+    height: 200px;
+    width: 150px;
 }

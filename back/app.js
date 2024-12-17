@@ -136,7 +136,7 @@ app.post('/api/v1/brawlers', async (req, res) => {
 
 app.put('/api/v1/brawler/:id', async (req, res) => {
   const { id } = req.params;
-  const { nombre, tipo, rareza, descripcion, ataque, super: superPower, starPower, gadget, imagen } = req.body;
+  const { nombre, tipo, rareza, descripcion, ataque, super: superPower, starPower, gadget} = req.body;
   try {
     const updatedBrawler = await prisma.brawler.update({
       where: {
@@ -150,8 +150,7 @@ app.put('/api/v1/brawler/:id', async (req, res) => {
         ataque: ataque,
         super: superPower,
         starPower: starPower,
-        gadget: gadget,
-        imagen: imagen
+        gadget: gadget
       }
     });
     res.status(200).json(updatedBrawler);
