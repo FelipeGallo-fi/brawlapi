@@ -35,6 +35,7 @@ app.post('/api/v1/usuarios', async (req, res) => {
         copas,
         brawlerFav,
         monedas
+        
       }
     });
     res.status(201).json(usuario);
@@ -160,14 +161,11 @@ app.put('/api/v1/brawler/:id', async (req, res) => {
 });
 
 //brawlers delete
-
-app.delete('/api/v1/brawler/:id', async (req, res) => {
+app.delete('/api/v1/brawlers/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.brawler.delete({
-      where: {
-        id: parseInt(id)
-      }
+      where: { id: parseInt(id, 10) }
     });
     res.status(204).end();
   } catch (error) {
@@ -223,3 +221,35 @@ app.listen(port, () => {
 });
 
 module.exports = prisma;
+
+//brawlers update
+app.put('/api/v1/brawlers/:id', async (req, res) => {
+  const { id } = req.params;
+  const { tipo, rareza, descripcion, ataque, super: superPower, starPower, gadget } = req.body;
+  try {
+    const updatedBrawler = await prisma.brawler.update({
+      where: { id: parseInt(id, 10) },
+      data: { tipo, rareza, descripcion, ataque, super: superPower, starPower, gadget }
+    });
+    res.json(updatedBrawler);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+//Borrar brawler
+app.delete('/api/v1/brawlers/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedBrawler = await prisma.brawler.delete({
+      where: {
+        id: parseInt(id, 10) // Asegúrate de que el ID se esté convirtiendo a entero correctamente
+      }
+    });
+    res.status(204).json({ success: true });
+  } catch (error) {
+    console.error('Error eliminando brawler:', error); // Log para más detalles
+    res.status(500).json({ error: error.message });
+  }
+});

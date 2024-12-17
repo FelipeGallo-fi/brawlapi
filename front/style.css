@@ -211,3 +211,20 @@ body {
     height: 200px;
     width: 150px;
 }
+
+/*Editar brawler form*/
+
+.eliminarForm{
+    width: 300px;
+    margin-left: 40%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#eliminarBrawlerForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
