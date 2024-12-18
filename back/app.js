@@ -11,7 +11,7 @@ app.use(cors());
 
 //Home
 
-app.get('/api/v1/inicio', async (req, res) => {
+app.get('/api/v1/usuarios', async (req, res) => {
   try {
     const usuarios = await prisma.usuario.findMany();
     res.status(200).json(usuarios); 
@@ -160,18 +160,6 @@ app.put('/api/v1/brawler/:id', async (req, res) => {
   }
 });
 
-//brawlers delete
-app.delete('/api/v1/brawlers/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await prisma.brawler.delete({
-      where: { id: parseInt(id, 10) }
-    });
-    res.status(204).end();
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 //brawlers read
 
@@ -211,17 +199,17 @@ app.put('/api/v1/brawlers/:id', async (req, res) => {
 
 //Borrar brawler
 
-app.delete('/api/v1/brawlers/:id', async (req, res) => {
+app.delete('/api/v1/brawler/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const deletedBrawler = await prisma.brawler.delete({
+    const brawlerEliminado = await prisma.brawler.delete({
       where: {
-        id: parseInt(id, 10) // Asegúrate de que el ID se esté convirtiendo a entero correctamente
+        id: parseInt(id, 10) 
       }
     });
-    res.status(204).json({ success: true });
+    res.status(204).json(brawlerEliminado);
   } catch (error) {
-    console.error('Error eliminando brawler:', error); // Log para más detalles
+    console.error('Error eliminando brawler:', error);
     res.status(500).json({ error: error.message });
   }
 });
