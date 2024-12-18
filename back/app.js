@@ -27,6 +27,19 @@ app.get('/api/v1/usuarios', async (req, res) => {
 app.post('/api/v1/usuarios', async (req, res) => {
   const { nombre, region, edad, copas, brawlerFav, monedas } = req.body;
 
+  if (typeof nombre !== 'string' || nombre.trim() === '') {
+    return res.status(400).json({ error: 'El nombre debe ser una cadena de texto no vacía' });
+  }
+
+  if (typeof region !== 'string' || region.trim() === '') {
+    return res.status(400).json({ error: 'La región debe ser una cadena de texto no vacía' });
+  }
+
+  if (!Number.isInteger(edad) || edad <= 0) {
+    return res.status(400).json({ error: 'La edad debe ser un número entero positivo' });
+  }
+
+
   try {
     const usuario = await prisma.usuario.create({
       data: {
@@ -49,29 +62,39 @@ app.post('/api/v1/usuarios', async (req, res) => {
 app.put('/api/v1/usuario/:id', async (req, res) => {
   const { id } = req.params;
   const { nombre, region, edad, copas, brawlerFav, monedas } = req.body;
+
+  if (isNaN(parseInt(id))) {
+    return res.status(400).json({ error: 'ID inválido, debe ser un número' });
+  }
+
+  const usuarioViejo = await prisma.usuario.findUnique({
+    where:{id: parseInt(id)}
+  })
+
   try {
     const usuarioActualizado = await prisma.usuario.update({
-      where: {
-        id: parseInt(id)
-      },
+      where: { id: parseInt(id) },
       data: {
-        nombre: nombre,
-        region: region,
-        edad: edad,
-        copas: copas,
-        brawlerFav: brawlerFav,
-        monedas: monedas
+        nombre: nombre  || usuarioViejo.nombre,
+        region: region || usuarioViejo.region,
+        edad: edad || usuarioViejo.edad,
+        copas: copas || usuarioViejo.copas,
+        brawlerFav: brawlerFav || usuarioViejo.brawlerFav,
+        monedas : monedas || usuarioViejo.monedas
       }
     });
+
     res.status(200).json(usuarioActualizado);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error al actualizar el usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
+
 //usuarios read
 
-app.get('/api/v1/usuarios/:id', async (req, res) => {
+app.get('/api/v1/usuario/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const usuario = await prisma.usuario.findUnique({
@@ -91,7 +114,7 @@ app.get('/api/v1/usuarios/:id', async (req, res) => {
 
 //usaurios delete
 
-app.delete('/api/v1/usuarios/:id', async (req, res) => {
+app.delete('/api/v1/usuario/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.usuario.delete({
@@ -182,7 +205,7 @@ app.get('/api/v1/brawler/:id', async (req, res) => {
 });
 
 //brawlers update
-app.put('/api/v1/brawlers/:id', async (req, res) => {
+app.put('/api/v1/brawler/:id', async (req, res) => {
   const { id } = req.params;
   const { tipo, rareza, descripcion, ataque, super: superPower, starPower, gadget } = req.body;
   try {

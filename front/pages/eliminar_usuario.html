@@ -96,7 +96,7 @@
                event.preventDefault();
                const id = parseInt(document.getElementById('inputID').value, 10);
 
-               fetch(`http://localhost:3000/api/v1/usuarios/${id}`, {
+               fetch(`http://localhost:3000/api/v1/usuario/${id}`, {
                   method: 'DELETE'
                })
                .then(response => {

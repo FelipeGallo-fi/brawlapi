@@ -74,89 +74,73 @@
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('editarUsuarioForm');
-        const inputID = document.getElementById('inputID');
-        const inputNombre = document.getElementById('inputNombre');
-        const inputRegion = document.getElementById('inputRegion');
-        const inputEdad = document.getElementById('inputEdad');
-        const inputBrawler = document.getElementById('inputBrawler');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('editarUsuarioForm');
+            const inputID = document.getElementById('inputID');
+            const inputNombre = document.getElementById('inputNombre');
+            const inputRegion = document.getElementById('inputRegion');
+            const inputEdad = document.getElementById('inputEdad');
+            const inputBrawler = document.getElementById('inputBrawler');
 
-        inputID.addEventListener('change', function() {
-            const id = parseInt(inputID.value, 10);
-            if (!isNaN(id)) {
-                fetch(`http://localhost:3000/api/v1/usuarios/${id}`)
-                    .then(response => response.json())
-                    .then(usuario => {
-                        if (usuario) {
-                            inputNombre.placeholder = usuario.nombre || '';
-                            inputRegion.placeholder = usuario.region || '';
-                            inputEdad.placeholder = usuario.edad || '';
-                            inputBrawler.placeholder = "Nombre brawler favorito (id brawler favorito actual: " + usuario.brawlerFav + ")" || ''; 
-                        } else {
-                            alert('Usuario no encontrado');
-                        }
-                    })
-                    .catch(error => console.error('Error obteniendo usuario:', error));
-            }
-        });
-
-        if (form) {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const id = parseInt(inputID.value, 10);
-                const nombre = inputNombre.value || inputNombre.placeholder;
-                const region = inputRegion.value || inputRegion.placeholder;
-                const edad = inputEdad.value ? parseInt(inputEdad.value, 10) : parseInt(inputEdad.placeholder, 10);
-                const brawlerNombre = inputBrawler.value || inputBrawler.placeholder.split(': ')[1];
-
-                if (inputBrawler.value && inputBrawler.value !== brawlerNombre) {
-                    fetch('http://localhost:3000/api/v1/brawlers')
-                        .then(response => response.json())
-                        .then(brawlers => {
-                            const brawler = brawlers.find(elemento => elemento.nombre.toLowerCase() === brawlerNombre.toLowerCase());
-                            if (brawler && brawler.id) {
-                                const brawlerFav = brawler.id;
-                                fetch(`http://localhost:3000/api/v1/usuario/${id}`, {
-                                    method: 'PUT',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({ nombre, region, edad, brawlerFav })
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log('Usuario actualizado:', data);
-                                    alert('Usuario actualizado exitosamente');
-                                    form.reset();
-                                })
-                                .catch(error => console.error('Error actualizando usuario:', error));
-                            } else {
-                                alert('Brawler no encontrado');
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const id = inputID.value;
+                    const nombre = inputNombre.value;
+                    const region = inputRegion.value;
+                    const edad = parseInt(inputEdad.value);
+                    const brawlerNombre = inputBrawler.value;
+                    fetch(`http://localhost:3000/api/v1/usuario/${id}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Usuario no encontrado');
                             }
+                            return response.json();
                         })
-                        .catch(error => console.error('Error buscando Brawler:', error));
-                } else {
-                    const brawlerFav = parseInt(inputBrawler.placeholder.split(': ')[1]);
-                    fetch(`http://localhost:3000/api/v1/usuario/${id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ nombre, region, edad, brawlerFav })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Usuario actualizado:', data);
-                        alert('Usuario actualizado exitosamente');
-                        form.reset();
-                    })
-                    .catch(error => console.error('Error actualizando usuario:', error));
-                }
-            });
-        }
-    });
-</script>
+                        .then(data => {
+                            console.log('Usuario encontrado:', data);
+                            fetch('http://localhost:3000/api/v1/brawlers')
+                                .then(response => response.json())
+                                .then(brawlers => {
+                                    const brawler = brawlers.find(elemento => elemento.nombre.toLowerCase() === brawlerNombre.toLowerCase());
+                                    if (brawler && brawler.id) {
+                                        const brawlerFav = brawler.id;
+                                        fetch(`http://localhost:3000/api/v1/usuario/${id}`, {
+                                            method: 'PUT',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ nombre, region, edad, brawlerFav })
+                                        })
+                                        .then(response => response.json().then(data => ({ status: response.status, body: data }))
+                                        )
+                                        .then(({ status, body }) => {
+                                            if (status === 200) {
+                                                alert('Usuario editado exitosamente');
+                                                form.reset();
+                                                window.location.reload();
+                                            } else {
+                                                alert('Error editando usuario');
+                                            }
+                                        })
+                                        .catch(error => console.error('Error:', error));
+                                    } else {
+                                        alert('Brawler no encontrado');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    alert('Brawler no encontrado');
+                                });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Usuario no encontrado');
+                        });
+                });
+            };
+        });
+    </script>
 </body>
 </html>
