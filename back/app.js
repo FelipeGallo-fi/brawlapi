@@ -168,7 +168,7 @@ app.get('/api/v1/brawler/:id', async (req, res) => {
   try {
     const brawler = await prisma.brawler.findUnique({
       where: {
-        id: parseInt(id)
+        id: parseInt(id, 10)
       }
     });
     if (brawler) {
