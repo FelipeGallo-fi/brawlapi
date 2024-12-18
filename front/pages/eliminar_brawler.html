@@ -100,21 +100,43 @@
                event.preventDefault();
                const id = parseInt(document.getElementById('inputID').value, 10);
 
-               fetch(`http://localhost:3000/api/v1/brawlers/${id}`, {
-                  method: 'DELETE'
-               })
-               .then(response => {
-                  if (response.ok) {
-                     alert('Brawler eliminado exitosamente');
-                     document.getElementById('eliminarBrawlerForm').reset();
-                     window.location.reload(); 
-                  } else {
-                     alert('Error eliminando brawler');
-                  }
-               })
-               .catch(error => console.error('Error eliminando brawler:', error));
+               fetch('http://localhost:3000/api/v1/usuarios')
+                  .then(response => response.json())
+                  .then(usuarios => {
+                        const esFavorito = usuarios.some(usuario => usuario.brawlerFav === id);
+   
+                        if (esFavorito) {
+                           alert('No se puede eliminar el brawler porque es el favorito de algún usuario');
+                           return;
+                        }
+
+                        fetch('http://localhost:3000/api/v1/brawlers')
+                           .then(response => response.json())
+                           .then(brawlers => {
+                              if (brawlers.length <= 2) {
+                                    alert('Debe haber al menos 2 brawlers en la base de datos');
+                                    return;
+                              }
+
+                              fetch(`http://localhost:3000/api/v1/brawler/${id}`, {
+                                    method: 'DELETE'
+                              })
+                              .then(response => {
+                                    if (response.ok) {
+                                       alert('Brawler eliminado exitosamente');
+                                       document.getElementById('eliminarBrawlerForm').reset();
+                                       window.location.reload();
+                                    } else {
+                                       alert('Error eliminando brawler');
+                                    }
+                              })
+                              .catch(error => console.error('Error eliminando brawler:', error));
+                           })
+                           .catch(error => console.error('Error obteniendo brawlers:', error));
+                  })
+                  .catch(error => console.error('Error obteniendo usuarios:', error));
             });
-         });
+      });
       </script>
    </body>
 </html>

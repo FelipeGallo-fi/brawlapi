@@ -50,15 +50,8 @@
                         <div>
                             <img src="../imgs/${brawler.nombre}.png" class="card-img-top" alt="${brawler.nombre}">
                         </div>
-                        <h5 class="card-title"><strong>${brawler.nombre}</strong></h5>
+                        <h5 class="card-title"><strong><a href="estadisticas_brawlers?id=${brawler.id}.html">${brawler.nombre}</a></strong></h5>
                         <p class="card-text"><strong>ID:</strong> ${brawler.id}</p>
-                        <p class="card-text"><strong>Tipo:</strong> ${brawler.tipo}</p>
-                        <p class="card-text"><strong>Rareza:</strong> ${brawler.rareza}</p>
-                        <p class="card-text"><strong>Descripcion:</strong> ${brawler.descripcion}</p>
-                        <p class="card-text"><strong>Ataque:</strong> ${brawler.ataque}</p>
-                        <p class="card-text"><strong>Super:</strong> ${brawler.super}</p>
-                        <p class="card-text"><strong>Gadget:</strong> ${brawler.gadget}</p>
-                        <p class="card-text"><strong>Starpower:</strong> ${brawler.starPower}</p>
                     </div>
                 `;
                 gridContainer.appendChild(brawlerCard);
