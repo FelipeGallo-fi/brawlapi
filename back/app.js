@@ -5,7 +5,7 @@ const app = express();
 const port = 3000;
 
 const prisma = new PrismaClient();
-
+module.exports = prisma;
 app.use(express.json());
 app.use(cors());
 
@@ -26,6 +26,7 @@ app.get('/api/v1/inicio', async (req, res) => {
 
 app.post('/api/v1/usuarios', async (req, res) => {
   const { nombre, region, edad, copas, brawlerFav, monedas } = req.body;
+
   try {
     const usuario = await prisma.usuario.create({
       data: {
@@ -35,7 +36,6 @@ app.post('/api/v1/usuarios', async (req, res) => {
         copas,
         brawlerFav,
         monedas
-        
       }
     });
     res.status(201).json(usuario);
@@ -193,35 +193,6 @@ app.get('/api/v1/brawler/:id', async (req, res) => {
   }
 });
 
-//brawlers buscar id por nombre
-
-app.get('/api/v1/brawlers', async (req, res) => {
-  const { nombre } = req.query;
-  try {
-    const brawlers = await prisma.brawler.findMany({
-      where: {
-        nombre: {
-          contains: nombre,
-          mode: 'insensitive'
-        }
-      },
-      select: {
-        id: true
-      }
-    });
-    res.status(200).json(brawlers);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-module.exports = prisma;
-
 //brawlers update
 app.put('/api/v1/brawlers/:id', async (req, res) => {
   const { id } = req.params;
@@ -239,6 +210,7 @@ app.put('/api/v1/brawlers/:id', async (req, res) => {
 
 
 //Borrar brawler
+
 app.delete('/api/v1/brawlers/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -252,4 +224,11 @@ app.delete('/api/v1/brawlers/:id', async (req, res) => {
     console.error('Error eliminando brawler:', error); // Log para más detalles
     res.status(500).json({ error: error.message });
   }
+});
+
+
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
 });

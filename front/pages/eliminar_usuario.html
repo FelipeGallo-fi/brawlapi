@@ -103,6 +103,7 @@
                   if (response.ok) {
                      alert('Usuario eliminado exitosamente');
                      document.getElementById('eliminarUsuarioForm').reset();
+                     window.location.reload(); 
                   } else {
                      alert('Error eliminando usuario');
                   }
