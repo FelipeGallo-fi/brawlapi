@@ -94,19 +94,27 @@
                                 },
                                 body: JSON.stringify({ nombre, region, edad, brawlerFav })
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Usuario creado:', data);
-                                alert('Usuario creado exitosamente');
-                                form.reset();
+                            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                            .then(({ status, body }) => {
+                                if (status >= 200 && status < 300) {
+                                    console.log('Usuario creado:', body);
+                                    alert('Usuario creado exitosamente');
+                                    form.reset();
+                                } else {
+                                    alert(`Error: ${body.error}`);
+                                }
                             })
-                            .catch(error => console.error('Error creando usuario:', error));
+                            .catch(error => {
+                                alert(`Error: ${error.message}`);
+                            });
                         } else {
                             alert('Brawler no encontrado');
                         }
                     })
-                    .catch(error => console.error('Error buscando Brawler:', error));
-            });
+                    .catch(error => {
+                        alert(`Error: ${error.message}`);
+                    });
+            }); 
         }
     });
     </script>
