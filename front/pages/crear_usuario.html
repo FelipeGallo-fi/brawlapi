@@ -59,21 +59,9 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="inputCopas" class="col-sm-2 col-form-label">Copas</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="inputCopas" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
                     <label for="inputBrawler" class="col-sm-2 col-form-label">Brawler Favorito</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputBrawler" required>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputMonedas" class="col-sm-2 col-form-label">Monedas</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="inputMonedas" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -90,43 +78,37 @@
                     const nombre = document.getElementById('inputNombre').value;
                     const region = document.getElementById('inputRegion').value;
                     const edad = parseInt(document.getElementById('inputEdad').value, 10);
-                    const copas = parseInt(document.getElementById('inputCopas').value, 10);
                     const brawlerNombre = document.getElementById('inputBrawler').value;
-                    const monedas = parseInt(document.getElementById('inputMonedas').value, 10);
+                    console.log(brawlerNombre);
 
-                    // Busca el ID del Brawler basado en el nombre
-                    fetch(`http://localhost:3000/api/v1/brawlers?nombre=${encodeURIComponent(brawlerNombre)}`)
-                        .then(response => response.json())
-                        .then(brawlers => {
-                            if (brawlers.length > 0) {
-                                const brawlerFav = brawlers[0].id;
-
-                                
-                                fetch('http://localhost:3000/api/v1/usuarios', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({ nombre, region, edad, copas, brawlerFav, monedas })
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log('Usuario creado:', data);
-                                    alert('Usuario creado exitosamente');
-                                    form.reset();
-                                })
-                                .catch(error => console.error('Error creando usuario:', error));
-                            } else {
-                                alert('Brawler no encontrado');
-                            }
-                        })
-                        .catch(error => console.error('Error buscando Brawler:', error));
-                });
-            }
-        });
-        
-           
-        
+                    fetch('http://localhost:3000/api/v1/brawlers')
+                    .then(response => response.json())
+                    .then(brawlers => {
+                        const brawler = brawlers.find(elemento => elemento.nombre.toLowerCase() === brawlerNombre.toLowerCase());
+                        if (brawler && brawler.id) {
+                            const brawlerFav = brawler.id;
+                            fetch('http://localhost:3000/api/v1/usuarios', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ nombre, region, edad, brawlerFav })
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Usuario creado:', data);
+                                alert('Usuario creado exitosamente');
+                                form.reset();
+                            })
+                            .catch(error => console.error('Error creando usuario:', error));
+                        } else {
+                            alert('Brawler no encontrado');
+                        }
+                    })
+                    .catch(error => console.error('Error buscando Brawler:', error));
+            });
+        }
+    });
     </script>
 </body>
 </html>
