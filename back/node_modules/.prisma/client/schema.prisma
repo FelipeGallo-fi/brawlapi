@@ -29,8 +29,8 @@ model Brawler {
   super       String
   starPower   String
   gadget      String
-  Ataque      Int
-  Defensa     Int
+  poder       Int
+  defensa     Int
   usuarios    Usuario[]
   batallas    Batalla[]
 }
