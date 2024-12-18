@@ -77,37 +77,56 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('editarBrawlerForm');
+            const inputID = document.getElementById('inputID');
+            const inputTipo = document.getElementById('inputTipo');
+            const inputRareza = document.getElementById('inputRareza');
+            const inputDescripcion = document.getElementById('inputDescripcion');
+            const inputAtaque = document.getElementById('inputAtaque');
 
-            form.addEventListener('submit', function(event) {
+            inputID.addEventListener('change', function() {
+                const id = parseInt(inputID.value, 10);
+                if (!isNaN(id)) {
+                    fetch(`http://localhost:3000/api/v1/brawler/${id}`)
+                        .then(response => response.json())
+                        .then(brawler => {
+                            if (brawler) {
+                                inputTipo.placeholder = brawler.tipo || '';
+                                inputRareza.placeholder = brawler.rareza || '';
+                                inputDescripcion.placeholder = brawler.descripcion || '';
+                                inputAtaque.placeholder = brawler.ataque || ''; 
+                            } else {
+                                alert('Brawler no encontrado');
+                            }
+                        })
+                        .catch(error => console.error('Error obteniendo brawlers:', error));
+                }
+            });
+
+            if (form) {
+                form.addEventListener('submit', function(event) {
                 event.preventDefault();
+                const id = parseInt(inputID.value, 10);
+                const tipo = inputTipo.value || inputTipo.placeholder;
+                const rareza = inputRareza.value || inputRareza.placeholder;
+                const descripcion = inputDescripcion.value || inputDescripcion.placeholder;
+                const ataque = inputAtaque.value || inputAtaque.placeholder;
 
-                const brawlerId = parseInt(document.getElementById('inputID').value, 10);
-                const brawler = {
-                    tipo: document.getElementById('inputTipo').value,
-                    rareza: document.getElementById('inputRareza').value,
-                    descripcion: document.getElementById('inputDescripcion').value,
-                    ataque: document.getElementById('inputAtaque').value,
-                    super: document.getElementById('inputSuper').value,
-                    starPower: document.getElementById('inputStarPower').value,
-                    gadget: document.getElementById('inputGadget').value
-                };
-
-                fetch(`http://localhost:3000/api/v1/brawlers/${brawlerId}`, {
+                fetch(`http://localhost:3000/api/v1/brawler/${id}`, {
                     method: 'PUT',
                     headers: {
-                        'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(brawler)
+                    body: JSON.stringify({ tipo, rareza, descripcion, ataque })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Brawler editado:', data);
-                    alert('Brawler editado exitosamente');
+                    console.log('Brawler actualizado:', data);
+                    alert('Brawler actualizado exitosamente');
                     form.reset();
-                    window.location.href = './brawlers.html'; // Redirigir a la página de brawlers
                 })
-                .catch(error => console.error('Error editando brawler:', error));
-            });
+                .catch(error => console.error('Error actualizando brawler:', error));
+                });
+            }
         });
     </script>
 </body>
