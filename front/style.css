@@ -72,7 +72,7 @@ body {
 #landing {
     background-size: cover;
     background-position: center;
-    height: 70vh;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,6 +82,16 @@ body {
     font-weight: 700;
     font-family: "Helvetica", cursive;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 20px auto;
+}
+
+/*Titulos*/
+.titulos {
+    margin-top: 10px; 
+    text-align: center; 
+    font-size: 4em; 
+    font-weight: bold;
+    color: #333; 
 }
 
 #landing img{
@@ -119,7 +129,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    
     margin-bottom: 30px;
 }
 
@@ -165,6 +175,7 @@ body {
 /* Formularios usuario */
 
 .formUsuario {
+    margin: auto;
     width: 90%;
     max-width: 600px;
     background-color: white;
@@ -240,3 +251,4 @@ body {
     justify-content: center;
     align-items: center;
 }
+
