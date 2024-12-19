@@ -121,19 +121,61 @@
                         },
                         body: JSON.stringify(batalla)
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Batalla editada con éxito');
+                    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                    .then(({ status, body }) => {
+                        if (status >= 200 && status < 300) {
+                            console.log('Batalla editada:', body);
+                            alert('Batalla editada exitosamente');
+                            if(resultado == "Victoria"){
+                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    copas: 30,
+                                    monedas: 15
+                                })
+                                })
+                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                                .then(({ status, body }) => {
+                                    if (status >= 200 && status < 300) {
+                                        console.log('Batalla actualizada:', body);
+                                    } else {
+                                        alert(`Error editando batalla: ${body.error}`);
+                                    }
+                                })
+                                .catch(error => console.error('Error actualizando batalla:', error));
+                                
+                            }else{
+                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        copas: -30,
+                                        monedas: -15
+                                    })
+                                })
+                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                                .then(({ status, body }) => {
+                                    if (status >= 200 && status < 300) {
+                                        console.log('Batalla actualizada:', body);
+                                    } else {
+                                        alert(`Error actualizando batalla: ${body.error}`);
+                                    }
+                                })
+                                .catch(error => console.error('Error actualizando batalla:', error));
+                                
+                            }
                             window.location.href = './batallas.html';
+                            form.reset();
                         } else {
-                            alert('Error al editar la batalla');
+                            alert(`Error: ${body.error}`);
                         }
                     })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Error al editar la batalla');
-                    });
+                    .catch(error => console.error('Error editando batalla:', error));
                 });
             }
         });

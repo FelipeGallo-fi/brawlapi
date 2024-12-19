@@ -118,9 +118,9 @@
                                 .then(response => response.json().then(data => ({ status: response.status, body: data })))
                                 .then(({ status, body }) => {
                                     if (status >= 200 && status < 300) {
-                                        console.log('Usuario actualizado:', body);
+                                        console.log('Batalla creada:', body);
                                     } else {
-                                        alert(`Error actualizando usuario: ${body.error}`);
+                                        alert(`Error creando batalla: ${body.error}`);
                                     }
                                 })
                                 .catch(error => console.error('Error actualizando usuario:', error));
@@ -139,12 +139,12 @@
                                 .then(response => response.json().then(data => ({ status: response.status, body: data })))
                                 .then(({ status, body }) => {
                                     if (status >= 200 && status < 300) {
-                                        console.log('Usuario actualizado:', body);
+                                        console.log('Batalla creada:', body);
                                     } else {
-                                        alert(`Error actualizando usuario: ${body.error}`);
+                                        alert(`Error creando batalla: ${body.error}`);
                                     }
                                 })
-                                .catch(error => console.error('Error actualizando usuario:', error));
+                                .catch(error => console.error('Error creando batalla:', error));
                                 
                             }
                             window.location.href = './batallas.html';
