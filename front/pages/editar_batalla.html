@@ -43,7 +43,7 @@
                 <div class="row mb-3">
                     <label for="inputID" class="col-sm-2 col-form-label">ID</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="inputID" required>
+                        <input type="number" class="form-control" placeholder="ID de la batalla" id="inputID" required>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -55,22 +55,22 @@
                 <div class="row mb-3">
                     <label for="inputUsuario" class="col-sm-2 col-form-label">Usuario</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputUsuario" required>
+                        <input type="text" placeholder="ID del usuario" class="form-control" id="inputUsuario" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputBrawler" class="col-sm-2 col-form-label">Brawler</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputBrawler" required>
+                        <input type="text" class="form-control" placeholder="Nombre del brawler (Frank o Primo)" id="inputBrawler" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputResultado" class="col-sm-2 col-form-label">Resultado</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputResultado" required>
+                        <input type="text" class="form-control" placeholder="Victoria o Derrota" id="inputResultado" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary">Editar batalla</button>
             </form>
         </div>
     </main>
@@ -106,7 +106,7 @@
                     const usuarioId = parseInt(document.getElementById('inputUsuario').value);
                     const brawlerNombre = document.getElementById('inputBrawler').value;
                     const resultado = document.getElementById('inputResultado').value;
-                    
+
                     const batalla = {
                         fecha,
                         usuarioId,
