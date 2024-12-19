@@ -198,22 +198,10 @@ body {
     width: 100%;
 }
 
-/*Eliminar usuario form*/
 
-.eliminarForm{
-    width: 300px;
-    margin-left: 40%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-#eliminarUsuarioForm{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
+
 
 /*Brawlers grid*/
 
@@ -245,7 +233,7 @@ body {
 
 .eliminarForm{
     width: 300px;
-    margin-left: 40%;
+    margin: auto;
     background-color: white;
     padding: 20px;
     border-radius: 5px;
@@ -258,3 +246,11 @@ body {
     align-items: center;
 }
 
+/*Eliminar usuario form*/
+
+#eliminarUsuarioForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+}
