@@ -89,6 +89,7 @@ body {
 /*Titulos*/
 .titulos {
     margin-top: 10px; 
+    margin-bottom: 10px;
     text-align: center; 
     font-size: 4em; 
     font-weight: bold;
@@ -108,6 +109,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -120,6 +122,8 @@ body {
     margin: 0; 
     padding: 0; 
     list-style: none;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 #barra ul li{
     list-style: none;
@@ -142,6 +146,7 @@ body {
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    margin-top: 10px;
 }
 
 .tabla thead {
@@ -195,22 +200,10 @@ body {
     width: 100%;
 }
 
-/*Eliminar usuario form*/
 
-.eliminarForm{
-    width: 300px;
-    margin-left: 40%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-#eliminarUsuarioForm{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
+
 
 /*Brawlers grid*/
 
@@ -242,7 +235,7 @@ body {
 
 .eliminarForm{
     width: 300px;
-    margin-left: 40%;
+    margin: auto;
     background-color: white;
     padding: 20px;
     border-radius: 5px;
@@ -255,3 +248,11 @@ body {
     align-items: center;
 }
 
+/*Eliminar usuario form*/
+
+#eliminarUsuarioForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+}

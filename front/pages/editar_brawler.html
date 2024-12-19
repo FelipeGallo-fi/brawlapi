@@ -20,9 +20,6 @@
                             <a class="nav-link active" aria-current="page" href="./brawlers.html">Brawlers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" id="crear_brawler" aria-current="page" href="./crear_brawler.html">Crear brawler</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="./eliminar_brawler.html">Eliminar brawler</a>
                         </li>
                     </ul>
@@ -124,6 +121,7 @@
                     alert('Brawler actualizado exitosamente');
                     window.location.href = './batallas.html';
                     form.reset();
+                    window.location.href = './brawlers.html'; 
                 })
                 .catch(error => console.error('Error actualizando brawler:', error));
                 });

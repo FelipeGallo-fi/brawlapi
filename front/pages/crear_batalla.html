@@ -85,6 +85,13 @@
                     const brawlerNombre= document.getElementById('inputBrawler').value;
                     const resultado = document.getElementById('inputResultado').value;
 
+                    const fechaSeleccionada = new Date(fecha);
+                    const fechaActual = new Date();
+                    if (fechaSeleccionada > fechaActual) {
+                        alert('La fecha no puede ser en el futuro');
+                        return;
+                    }
+
                     const batalla = {
                         fecha,
                         usuarioId,
@@ -99,6 +106,7 @@
                         },
                         body: JSON.stringify(batalla)
                     })
+
                     .then(response => response.json().then(data => ({ status: response.status, body: data })))
                     .then(({ status, body }) => {
                         if (status >= 200 && status < 300) {
@@ -152,6 +160,13 @@
                         } else {
                             alert(`Error: ${body.error}`);
                         }
+
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Batalla creada:', data);
+                        alert('Batalla creada exitosamente');
+                        form.reset();
+                        window.location.href = './batallas.html'; 
                     })
                     .catch(error => console.error('Error creando batalla:', error));
                 });

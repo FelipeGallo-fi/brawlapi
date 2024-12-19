@@ -106,7 +106,17 @@
                     const usuarioId = parseInt(document.getElementById('inputUsuario').value);
                     const brawlerNombre = document.getElementById('inputBrawler').value;
                     const resultado = document.getElementById('inputResultado').value;
+                    
 
+
+                    const fechaSeleccionada = new Date(fecha);
+                    const fechaActual = new Date();
+                    if (fechaSeleccionada > fechaActual) {
+                        alert('La fecha no puede ser en el futuro');
+                        return;
+                    }
+
+                    
                     const batalla = {
                         fecha,
                         usuarioId,
