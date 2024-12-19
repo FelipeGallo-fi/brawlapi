@@ -75,7 +75,7 @@
         </div>
     </main>
     <script>
-          document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
 
@@ -97,6 +97,12 @@
                     event.preventDefault();
                     const id = parseInt(document.getElementById('inputID').value);
                     const fecha = document.getElementById('inputFecha').value;
+                    const fechaSeleccionada = new Date(fecha);
+                    const fechaActual = new Date();
+                    if (fechaSeleccionada > fechaActual) {
+                        alert('La fecha no puede ser en el futuro');
+                        return;
+                    }
                     const usuarioId = parseInt(document.getElementById('inputUsuario').value);
                     const brawlerNombre = document.getElementById('inputBrawler').value;
                     const resultado = document.getElementById('inputResultado').value;
@@ -108,7 +114,7 @@
                         resultado
                     };
 
-                    fetch(`http://localhost:3000/api/v1/batallas/${id}`, {
+                    fetch(`http://localhost:3000/api/v1/batalla/${id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'

@@ -105,8 +105,8 @@
                             console.log('Batalla creada:', body);
                             alert('Batalla creada exitosamente');
                             if(resultado == "Victoria"){
-                                fetch(`http://localhost:3000/api/v1/usuarios/${usuarioId}`, {
-                                method: 'PATCH',
+                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                                method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
@@ -114,16 +114,38 @@
                                     copas: 30,
                                     monedas: 15
                                 })
-                            })
-                            .then(response => response.json().then(data => ({ status: response.status, body: data })))
-                            .then(({ status, body }) => {
-                                if (status >= 200 && status < 300) {
-                                    console.log('Usuario actualizado:', body);
-                                } else {
-                                    alert(`Error actualizando usuario: ${body.error}`);
-                                }
-                            })
-                            .catch(error => console.error('Error actualizando usuario:', error));
+                                })
+                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                                .then(({ status, body }) => {
+                                    if (status >= 200 && status < 300) {
+                                        console.log('Usuario actualizado:', body);
+                                    } else {
+                                        alert(`Error actualizando usuario: ${body.error}`);
+                                    }
+                                })
+                                .catch(error => console.error('Error actualizando usuario:', error));
+                                
+                            }else{
+                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        copas: -30,
+                                        monedas: -15
+                                    })
+                                })
+                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                                .then(({ status, body }) => {
+                                    if (status >= 200 && status < 300) {
+                                        console.log('Usuario actualizado:', body);
+                                    } else {
+                                        alert(`Error actualizando usuario: ${body.error}`);
+                                    }
+                                })
+                                .catch(error => console.error('Error actualizando usuario:', error));
+                                
                             }
                             window.location.href = './batallas.html';
                             form.reset();

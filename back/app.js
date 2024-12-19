@@ -75,12 +75,12 @@ app.put('/api/v1/usuario/:id', async (req, res) => {
     const usuarioActualizado = await prisma.usuario.update({
       where: { id: parseInt(id) },
       data: {
-        nombre: nombre  || usuarioViejo.nombre,
+        nombre: nombre || usuarioViejo.nombre,
         region: region || usuarioViejo.region,
         edad: edad || usuarioViejo.edad,
-        copas: copas || usuarioViejo.copas,
+        copas: Math.max(0, usuarioViejo.copas + (copas || 0)),
         brawlerFav: brawlerFav || usuarioViejo.brawlerFav,
-        monedas : monedas || usuarioViejo.monedas
+        monedas: Math.max(0, usuarioViejo.monedas + (monedas || 0))
       }
     });
 
