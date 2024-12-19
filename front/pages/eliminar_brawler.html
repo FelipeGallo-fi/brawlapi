@@ -22,9 +22,7 @@
                            <li class="nav-item">
                               <a class="nav-link active" id="editar_brawler" aria-current="page"  href="./editar_brawler.html">Editar Brawler</a>
                            </li>
-                           <li class="nav-item">
-                              <a class="nav-link active" aria-current="page" href="./eliminar_brawler.html">Eliminar Brawler</a>
-                           </li>
+                           
                      </ul>
                   </div>
                </div>
@@ -126,6 +124,7 @@
                                        alert('Brawler eliminado exitosamente');
                                        document.getElementById('eliminarBrawlerForm').reset();
                                        window.location.reload();
+                                       window.location.href = './brawlers.html'; 
                                     } else {
                                        alert('Error eliminando brawler');
                                     }

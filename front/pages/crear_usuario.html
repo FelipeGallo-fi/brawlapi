@@ -100,6 +100,7 @@
                                     console.log('Usuario creado:', body);
                                     alert('Usuario creado exitosamente');
                                     form.reset();
+                                    window.location.href = './usuarios.html';
                                 } else {
                                     alert(`Error: ${body.error}`);
                                 }
