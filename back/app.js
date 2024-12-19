@@ -260,10 +260,11 @@ app.get('/api/v1/batallas', async (req, res) => {
 });
 
 // Crear una nueva batalla
+
 app.post('/api/v1/batallas', async (req, res) => {
   const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
   try {
-    // Buscar el brawler por su nombre
+
     const brawler = await prisma.brawler.findUnique({
       where: {
         nombre: brawlerNombre
@@ -274,7 +275,6 @@ app.post('/api/v1/batallas', async (req, res) => {
       return res.status(404).json({ error: 'Brawler no encontrado' });
     }
 
-    // Crear la batalla utilizando el id del brawler encontrado
     const batalla = await prisma.batalla.create({
       data: {
         fecha: new Date(fecha),
@@ -291,6 +291,7 @@ app.post('/api/v1/batallas', async (req, res) => {
 });
 
 // Obtener una batalla por ID
+
 app.get('/api/v1/batallas/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -311,11 +312,12 @@ app.get('/api/v1/batallas/:id', async (req, res) => {
 });
 
 // Actualizar una batalla
+
 app.put('/api/v1/batallas/:id', async (req, res) => {
   const { id } = req.params;
   const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
   try {
-    // Buscar el brawler por su nombre
+
     const brawler = await prisma.brawler.findUnique({
       where: {
         nombre: brawlerNombre
@@ -326,7 +328,6 @@ app.put('/api/v1/batallas/:id', async (req, res) => {
       return res.status(404).json({ error: 'Brawler no encontrado' });
     }
 
-    // Actualizar la batalla utilizando el id del brawler encontrado
     const batalla = await prisma.batalla.update({
       where: { id: parseInt(id, 10) },
       data: {

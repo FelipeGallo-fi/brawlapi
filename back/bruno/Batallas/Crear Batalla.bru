@@ -6,6 +6,15 @@ meta {
 
 post {
   url: http://localhost:3000/api/v1/batallas
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "fecha": "2023-10-01T12:00:00Z",
+    "usuarioId": 23,
+    "brawlerId": 10,
+    "resultado": "victoria"
+  }
 }

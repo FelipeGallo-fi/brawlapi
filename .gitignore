@@ -1,4 +1,5 @@
-/node_modules/
+back/node_modules
+front/node_modules
 /var/lib/postgresql/data
 /.env
 /node_modules/@prisma/client
