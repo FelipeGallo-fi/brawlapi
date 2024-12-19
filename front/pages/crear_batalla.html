@@ -35,7 +35,7 @@
             <a href="../index.html"><img src="../imgs/logo.jpeg" alt="Brawl stars"></a>
         </div>
         <div>
-            <h1>Crear Batalla</h1>
+            <h1 class="titulos">Crear Batalla</h1>
         </div>
         <div>
 
@@ -49,19 +49,19 @@
                 <div class="row mb-3">
                     <label for="inputUsuario" class="col-sm-2 col-form-label">Usuario</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputUsuario" required>
+                        <input type="text" class="form-control" id="inputUsuario" placeholder="ID del usuario" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputBrawler" class="col-sm-2 col-form-label">Brawler</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputBrawler" required>
+                        <input type="text" class="form-control" id="inputBrawler" placeholder="Nombre del brawler (Primo, Frank)" required>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputResultado" class="col-sm-2 col-form-label">Resultado</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputResultado" required>
+                        <input type="text" class="form-control" id="inputResultado" placeholder="Victoria o Derrota" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
@@ -75,6 +75,12 @@
                 form.addEventListener('submit', function(event) {
                     event.preventDefault();
                     const fecha = document.getElementById('inputFecha').value;
+                    const fechaSeleccionada = new Date(fecha);
+                    const fechaActual = new Date();
+                    if (fechaSeleccionada > fechaActual) {
+                        alert('La fecha no puede ser en el futuro');
+                        return;
+                    }
                     const usuarioId = parseInt(document.getElementById('inputUsuario').value);
                     const brawlerNombre= document.getElementById('inputBrawler').value;
                     const resultado = document.getElementById('inputResultado').value;
@@ -100,6 +106,61 @@
                         },
                         body: JSON.stringify(batalla)
                     })
+
+                    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                    .then(({ status, body }) => {
+                        if (status >= 200 && status < 300) {
+                            console.log('Batalla creada:', body);
+                            alert('Batalla creada exitosamente');
+                            if(resultado == "Victoria"){
+                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    copas: 30,
+                                    monedas: 15
+                                })
+                                })
+                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                                .then(({ status, body }) => {
+                                    if (status >= 200 && status < 300) {
+                                        console.log('Batalla creada:', body);
+                                    } else {
+                                        alert(`Error creando batalla: ${body.error}`);
+                                    }
+                                })
+                                .catch(error => console.error('Error actualizando usuario:', error));
+                                
+                            }else{
+                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        copas: -30,
+                                        monedas: -15
+                                    })
+                                })
+                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                                .then(({ status, body }) => {
+                                    if (status >= 200 && status < 300) {
+                                        console.log('Batalla creada:', body);
+                                    } else {
+                                        alert(`Error creando batalla: ${body.error}`);
+                                    }
+                                })
+                                .catch(error => console.error('Error creando batalla:', error));
+                                
+                            }
+                            window.location.href = './batallas.html';
+                            form.reset();
+                        } else {
+                            alert(`Error: ${body.error}`);
+                        }
+
                     .then(response => response.json())
                     .then(data => {
                         console.log('Batalla creada:', data);
@@ -114,4 +175,3 @@
     </script>
 </body>
 </html>
-   

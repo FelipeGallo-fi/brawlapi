@@ -75,12 +75,12 @@ app.put('/api/v1/usuario/:id', async (req, res) => {
     const usuarioActualizado = await prisma.usuario.update({
       where: { id: parseInt(id) },
       data: {
-        nombre: nombre  || usuarioViejo.nombre,
+        nombre: nombre || usuarioViejo.nombre,
         region: region || usuarioViejo.region,
         edad: edad || usuarioViejo.edad,
-        copas: copas || usuarioViejo.copas,
+        copas: Math.max(0, usuarioViejo.copas + (copas || 0)),
         brawlerFav: brawlerFav || usuarioViejo.brawlerFav,
-        monedas : monedas || usuarioViejo.monedas
+        monedas: Math.max(0, usuarioViejo.monedas + (monedas || 0))
       }
     });
 
@@ -238,12 +238,6 @@ app.delete('/api/v1/brawler/:id', async (req, res) => {
 });
 
 
-
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
 // Obtener todas las batallas
 app.get('/api/v1/batallas', async (req, res) => {
   try {
@@ -265,6 +259,16 @@ app.post('/api/v1/batallas', async (req, res) => {
   const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
   try {
 
+    const usuario = await prisma.usuario.findUnique({
+      where: {
+        id: usuarioId
+      }
+    });
+
+    if(!usuario) {
+      return res.status(404).json({ error: 'El id de ese usuario no encontrado' });
+    }
+
     const brawler = await prisma.brawler.findUnique({
       where: {
         nombre: brawlerNombre
@@ -273,6 +277,10 @@ app.post('/api/v1/batallas', async (req, res) => {
 
     if (!brawler) {
       return res.status(404).json({ error: 'Brawler no encontrado' });
+    }
+
+    if(resultado !== "Victoria" && resultado !== "Derrota"){
+      return res.status(404).json({error: "Resultado de la batalla no valido"});
     }
 
     const batalla = await prisma.batalla.create({
@@ -292,7 +300,7 @@ app.post('/api/v1/batallas', async (req, res) => {
 
 // Obtener una batalla por ID
 
-app.get('/api/v1/batallas/:id', async (req, res) => {
+app.get('/api/v1/batalla/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const batalla = await prisma.batalla.findUnique({
@@ -313,10 +321,20 @@ app.get('/api/v1/batallas/:id', async (req, res) => {
 
 // Actualizar una batalla
 
-app.put('/api/v1/batallas/:id', async (req, res) => {
+app.put('/api/v1/batalla/:id', async (req, res) => {
   const { id } = req.params;
   const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
   try {
+
+    const usuario = await prisma.usuario.findUnique({
+      where: {
+        id: usuarioId
+      }
+    });
+
+    if(!usuario) {
+      return res.status(404).json({ error: 'El id de ese usuario no encontrado' });
+    }
 
     const brawler = await prisma.brawler.findUnique({
       where: {
@@ -328,20 +346,36 @@ app.put('/api/v1/batallas/:id', async (req, res) => {
       return res.status(404).json({ error: 'Brawler no encontrado' });
     }
 
-    const batalla = await prisma.batalla.update({
-      where: { id: parseInt(id, 10) },
+    if(resultado !== "Victoria" && resultado !== "Derrota"){
+      return res.status(404).json({error: "Resultado de la batalla no valido"});
+    }
+
+    const batallaVieja = await prisma.batalla.findUnique({
+      where:{
+        id : parseInt(id)
+      }
+    })
+
+  try {
+    const batallaActualizada = await prisma.batalla.update({
+      where: { id: parseInt(id) },
       data: {
-        fecha: new Date(fecha),
-        usuarioId: usuarioId,
-        brawlerId: brawler.id,
-        resultado: resultado
+        fecha: fecha ? new Date(fecha) : batallaVieja.fecha,
+        usuarioId: usuarioId || batallaVieja.usuarioId,
+        brawlerId: brawler.id || batallaVieja.brawlerId,
+        resultado: resultado || batallaVieja.resultado,
       }
     });
-
-    res.status(200).json({ success: true, batalla });
+    res.status(200).json({ success: true, batallaActualizada });
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
