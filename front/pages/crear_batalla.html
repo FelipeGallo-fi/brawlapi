@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,7 +64,7 @@
                         <input type="text" class="form-control" id="inputResultado" placeholder="Victoria o Derrota" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" class="btn btn-primary">Crear batalla</button>
             </form>
         </div>
     </main>
@@ -82,15 +82,8 @@
                         return;
                     }
                     const usuarioId = parseInt(document.getElementById('inputUsuario').value);
-                    const brawlerNombre= document.getElementById('inputBrawler').value;
+                    const brawlerNombre = document.getElementById('inputBrawler').value;
                     const resultado = document.getElementById('inputResultado').value;
-
-                    const fechaSeleccionada = new Date(fecha);
-                    const fechaActual = new Date();
-                    if (fechaSeleccionada > fechaActual) {
-                        alert('La fecha no puede ser en el futuro');
-                        return;
-                    }
 
                     const batalla = {
                         fecha,
@@ -106,67 +99,33 @@
                         },
                         body: JSON.stringify(batalla)
                     })
-
                     .then(response => response.json().then(data => ({ status: response.status, body: data })))
                     .then(({ status, body }) => {
                         if (status >= 200 && status < 300) {
                             console.log('Batalla creada:', body);
                             alert('Batalla creada exitosamente');
-                            if(resultado == "Victoria"){
-                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
+                            const updateData = resultado === "Victoria" ? { copas: 30, monedas: 15 } : { copas: -30, monedas: -15 };
+                            fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify({
-                                    copas: 30,
-                                    monedas: 15
-                                })
-                                })
-                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
-                                .then(({ status, body }) => {
-                                    if (status >= 200 && status < 300) {
-                                        console.log('Batalla creada:', body);
-                                    } else {
-                                        alert(`Error creando batalla: ${body.error}`);
-                                    }
-                                })
-                                .catch(error => console.error('Error actualizando usuario:', error));
-                                
-                            }else{
-                                fetch(`http://localhost:3000/api/v1/usuario/${usuarioId}`, {
-                                    method: 'PUT',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        copas: -30,
-                                        monedas: -15
-                                    })
-                                })
-                                .then(response => response.json().then(data => ({ status: response.status, body: data })))
-                                .then(({ status, body }) => {
-                                    if (status >= 200 && status < 300) {
-                                        console.log('Batalla creada:', body);
-                                    } else {
-                                        alert(`Error creando batalla: ${body.error}`);
-                                    }
-                                })
-                                .catch(error => console.error('Error creando batalla:', error));
-                                
-                            }
+                                body: JSON.stringify(updateData)
+                            })
+                            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                            .then(({ status, body }) => {
+                                if (status >= 200 && status < 300) {
+                                    console.log('Usuario actualizado:', body);
+                                } else {
+                                    alert(`Error actualizando usuario: ${body.error}`);
+                                }
+                            })
+                            .catch(error => console.error('Error actualizando usuario:', error));
                             window.location.href = './batallas.html';
                             form.reset();
                         } else {
                             alert(`Error: ${body.error}`);
                         }
-
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Batalla creada:', data);
-                        alert('Batalla creada exitosamente');
-                        form.reset();
-                        window.location.href = './batallas.html'; 
                     })
                     .catch(error => console.error('Error creando batalla:', error));
                 });
