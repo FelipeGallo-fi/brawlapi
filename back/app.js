@@ -116,14 +116,29 @@ app.get('/api/v1/usuario/:id', async (req, res) => {
 
 app.delete('/api/v1/usuario/:id', async (req, res) => {
   const { id } = req.params;
+
   try {
+    const usuario = await prisma.usuario.findUnique({
+      where: { id: parseInt(id, 10) }
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    if(usuario.copas > 0 || usuario.monedas > 0){
+      return res.status(404).json({ error: 'No se puede eliminar un usario con copas o monedas mayores a 0'});
+    }
+
     await prisma.usuario.delete({
       where: {
-        id: parseInt(id)
+        id: parseInt(id, 10)
       }
     });
+
     res.status(204).end();
   } catch (error) {
+    console.error('Error eliminando usuario:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -224,13 +239,24 @@ app.put('/api/v1/brawler/:id', async (req, res) => {
 
 app.delete('/api/v1/brawler/:id', async (req, res) => {
   const { id } = req.params;
+
   try {
-    const brawlerEliminado = await prisma.brawler.delete({
+    const brawler = await prisma.brawler.findUnique({
+      where: { id: parseInt(id, 10) }
+    });
+
+    if (!brawler) {
+      return res.status(404).json({ error: 'Brawler no encontrado' });
+    }
+
+
+    await prisma.brawler.delete({
       where: {
-        id: parseInt(id, 10) 
+        id: parseInt(id, 10)
       }
     });
-    res.status(204).json(brawlerEliminado);
+
+    res.status(204).end();
   } catch (error) {
     console.error('Error eliminando brawler:', error);
     res.status(500).json({ error: error.message });
