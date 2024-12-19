@@ -82,6 +82,11 @@ Para cargar información usando Bruno, sigue estos pasos:
 
 Para crear los datos iniciales para la aplicación, sigue estos pasos:
 
+   ```bash
+   cd back
+   npx prisma migrate dev
+   ```
+
 #### Creando Brawlers
 
 1. Abrir Bruno y asegurarse de que la colección esté cargada.
