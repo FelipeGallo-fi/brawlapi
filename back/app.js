@@ -319,6 +319,23 @@ app.get('/api/v1/batalla/:id', async (req, res) => {
   }
 });
 
+// Eliminar batallas
+
+app.delete('/api/v1/batalla/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const batallaEliminado = await prisma.batalla.delete({
+      where: {
+        id: parseInt(id, 10) 
+      }
+    });
+    res.status(204).json(batallaEliminado);
+  } catch (error) {
+    console.error('Error eliminando batlla:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Actualizar una batalla
 
 app.put('/api/v1/batalla/:id', async (req, res) => {
@@ -379,3 +396,4 @@ app.put('/api/v1/batalla/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
