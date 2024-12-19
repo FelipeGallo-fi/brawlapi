@@ -243,3 +243,104 @@ app.delete('/api/v1/brawler/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+// Obtener todas las batallas
+app.get('/api/v1/batallas', async (req, res) => {
+  try {
+    const batallas = await prisma.batalla.findMany({
+      include: {
+        usuario: true,
+        brawler: true
+      }
+    });
+    res.status(200).json(batallas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Crear una nueva batalla
+app.post('/api/v1/batallas', async (req, res) => {
+  const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
+  try {
+    // Buscar el brawler por su nombre
+    const brawler = await prisma.brawler.findUnique({
+      where: {
+        nombre: brawlerNombre
+      }
+    });
+
+    if (!brawler) {
+      return res.status(404).json({ error: 'Brawler no encontrado' });
+    }
+
+    // Crear la batalla utilizando el id del brawler encontrado
+    const batalla = await prisma.batalla.create({
+      data: {
+        fecha: new Date(fecha),
+        usuarioId: usuarioId,
+        brawlerId: brawler.id,
+        resultado: resultado
+      }
+    });
+
+    res.status(201).json(batalla);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Obtener una batalla por ID
+app.get('/api/v1/batallas/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const batalla = await prisma.batalla.findUnique({
+      where: { id: parseInt(id, 10) },
+      include: {
+        usuario: true,
+        brawler: true
+      }
+    });
+    if (!batalla) {
+      return res.status(404).json({ error: 'Batalla no encontrada' });
+    }
+    res.status(200).json(batalla);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Actualizar una batalla
+app.put('/api/v1/batallas/:id', async (req, res) => {
+  const { id } = req.params;
+  const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
+  try {
+    // Buscar el brawler por su nombre
+    const brawler = await prisma.brawler.findUnique({
+      where: {
+        nombre: brawlerNombre
+      }
+    });
+
+    if (!brawler) {
+      return res.status(404).json({ error: 'Brawler no encontrado' });
+    }
+
+    // Actualizar la batalla utilizando el id del brawler encontrado
+    const batalla = await prisma.batalla.update({
+      where: { id: parseInt(id, 10) },
+      data: {
+        fecha: new Date(fecha),
+        usuarioId: usuarioId,
+        brawlerId: brawler.id,
+        resultado: resultado
+      }
+    });
+
+    res.status(200).json({ success: true, batalla });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+
