@@ -45,7 +45,7 @@ Para iniciar el servidor Front, ejecutar:
    cd front 
       - npm run start 
       - http://0.0.0.0:8000
-      ![ejemplo servidor front](images/image-1.png)
+      ![ejemplo servidor front](images/example_bruno.png)
    ```
 
 Para iniciar el servidor Back, ejecutar:
@@ -53,7 +53,7 @@ Para iniciar el servidor Back, ejecutar:
    cd back 
       - docker compose up -d 
       - npm run dev
-      ![ejemplo servidor back](images/image.png)
+      ![ejemplo servidor back](images/example_back.png)
    ```
 
 ### Cargando Información con Bruno
