@@ -238,12 +238,6 @@ app.delete('/api/v1/brawler/:id', async (req, res) => {
 });
 
 
-
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
 // Obtener todas las batallas
 app.get('/api/v1/batallas', async (req, res) => {
   try {
@@ -265,6 +259,16 @@ app.post('/api/v1/batallas', async (req, res) => {
   const { fecha, usuarioId, brawlerNombre, resultado } = req.body;
   try {
 
+    const usuario = await prisma.usuario.findUnique({
+      where: {
+        id: usuarioId
+      }
+    });
+
+    if(!usuario) {
+      return res.status(404).json({ error: 'El id de ese usuario no encontrado' });
+    }
+
     const brawler = await prisma.brawler.findUnique({
       where: {
         nombre: brawlerNombre
@@ -273,6 +277,10 @@ app.post('/api/v1/batallas', async (req, res) => {
 
     if (!brawler) {
       return res.status(404).json({ error: 'Brawler no encontrado' });
+    }
+
+    if(resultado !== "Victoria" && resultado !== "Derrota"){
+      return res.status(404).json({error: "Resultado de la batalla no valido"});
     }
 
     const batalla = await prisma.batalla.create({
@@ -345,3 +353,6 @@ app.put('/api/v1/batallas/:id', async (req, res) => {
 });
 
 
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
