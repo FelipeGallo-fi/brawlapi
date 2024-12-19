@@ -73,6 +73,8 @@ body {
     background-size: cover;
     background-position: center;
     height: 50vh;
+    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,7 +84,6 @@ body {
     font-weight: 700;
     font-family: "Helvetica", cursive;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin-top: 20px auto;
 }
 
 /*Titulos*/
@@ -93,6 +94,7 @@ body {
     font-weight: bold;
     color: #333; 
 }
+
 
 #landing img{
     height: 300px;
@@ -106,7 +108,8 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #barra ul{

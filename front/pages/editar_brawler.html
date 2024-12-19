@@ -35,7 +35,7 @@
             <a href="../index.html"><img src="../imgs/logo.jpeg" alt="Brawl stars"></a>
         </div>
         <div>
-            <h1>Editar Brawler</h1>
+            <h1 class="titulos">Editar Brawler</h1>
         </div>
         <div>
             <form id="editarBrawlerForm" class="formUsuario">
@@ -122,6 +122,7 @@
                 .then(data => {
                     console.log('Brawler actualizado:', data);
                     alert('Brawler actualizado exitosamente');
+                    window.location.href = './batallas.html';
                     form.reset();
                 })
                 .catch(error => console.error('Error actualizando brawler:', error));

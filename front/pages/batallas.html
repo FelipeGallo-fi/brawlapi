@@ -53,10 +53,11 @@
             </table>
         </div>
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             fetch('http://localhost:3000/api/v1/batallas')
                 .then(response => response.json())
                 .then(batallas => {
+                    batallas.sort((a, b) => a.id - b.id);
                     const contenidoBatallas = document.getElementById('contenidoBatallas');
                     contenidoBatallas.innerHTML = ''; 
                     batallas.forEach(batalla => {

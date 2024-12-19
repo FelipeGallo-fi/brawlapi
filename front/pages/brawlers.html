@@ -39,6 +39,7 @@
         fetch('http://localhost:3000/api/v1/brawlers')
         .then(response => response.json())
         .then(brawlers => {
+            brawlers.sort((a, b) => a.id - b.id);
             console.log(brawlers);
             const gridContainer = document.getElementById('brawlers-grid');
             brawlers.forEach(brawler => {

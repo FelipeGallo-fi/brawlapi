@@ -34,13 +34,6 @@
         <div id="landing">
             <a href="../index.html"><img src="../imgs/logo.jpeg" alt="Brawl stars"></a>
         </div>
-        <div id="barra">
-            <ul>
-                <li><a href="./usuarios.html"><button type="button" class="btn btn-warning">Usuarios</button></a></li>
-                <li><a href="./brawlers.html"><button type="button" class="btn btn-warning">Brawlers</button></a></li>
-                <li><a href="./batallas.html"><button type="button" class="btn btn-warning">Batallas</button></a></li>
-            </ul>
-        </div>
         <div class="contenedor">
             <table class="tabla">
                 <thead>
@@ -64,6 +57,7 @@
         fetch('http://localhost:3000/api/v1/usuarios')
         .then(response => response.json())
         .then(data => {
+            data.sort((a, b) => a.id - b.id);
             console.log(data);
             data.forEach(usuario => {
                 const tr = document.createElement('tr');
