@@ -46,7 +46,7 @@ Para iniciar el servidor Front, ejecutar:
       - npm run start 
       - http://0.0.0.0:8000
    ```
-   ![ejemplo servidor front](images/example_bruno.png)
+   ![ejemplo servidor front](images/example_front.png)
 
 Para iniciar el servidor Back, ejecutar:
    ```bash
